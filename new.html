@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Surprise for Kalyani ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at top,#ffe5ec,#ffc2d1);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+}
+
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:4rem;
+  color:#d90429;
+  margin-bottom:20px;
+}
+
+p{
+  max-width:650px;
+  font-size:1.2rem;
+  color:#444;
+  margin-bottom:40px;
+  padding:0 20px;
+}
+
+button{
+  padding:15px 40px;
+  border:none;
+  border-radius:50px;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  position:relative;
+  z-index:5;
+}
+
+.yes{
+  background:linear-gradient(180deg,#ff4d6d,#d90429);
+  color:white;
+  box-shadow:0 10px 30px rgba(217,4,41,0.4);
+}
+
+.yes.pulse{
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(217,4,41,0.5);}
+  70%{box-shadow:0 0 0 15px rgba(217,4,41,0);}
+  100%{box-shadow:0 0 0 0 rgba(217,4,41,0);}
+}
+
+.no{
+  background:linear-gradient(180deg,#ffd6de,#f3a4b6);
+  color:#8b3b4a;
+  position:fixed;
+}
+
+.floating{
+  position:fixed;
+  pointer-events:none;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<h1>Hey Kalyani ❤️</h1>
+
+<p>
+You annoy me. You tease me.  
+But somehow you became my favorite person.  
+Will you be my Valentine?
+</p>
+
+<button class="yes pulse" id="yesBtn" onclick="celebrate()">YES! ❤️</button>
+<button class="no" id="noBtn">No</button>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+let phrases = [
+"Nice try 😜",
+"Hehe almost 😂",
+"Catch me first 👀",
+"Think again 😏",
+"You sure? 🤭",
+"Nopeee 😆",
+"Still trying? 😌",
+"That tickles 😝",
+"Mission failed 😎",
+"Try harder 😈"
+];
+
+let phraseIndex = 0;
+let yesScale = 1;
+
+// Position setup
+let posX = window.innerWidth * 0.6;
+let posY = window.innerHeight * 0.6;
+noBtn.style.left = posX + "px";
+noBtn.style.top = posY + "px";
+
+// Smooth escape physics
+document.addEventListener("mousemove", (e) => {
+
+  const rect = noBtn.getBoundingClientRect();
+  const centerX = rect.left + rect.width/2;
+  const centerY = rect.top + rect.height/2;
+
+  const dx = centerX - e.clientX;
+  const dy = centerY - e.clientY;
+
+  const distance = Math.sqrt(dx*dx + dy*dy);
+
+  if(distance < 140){
+    const angle = Math.atan2(dy, dx);
+    const force = 120 / distance;
+
+    posX += Math.cos(angle) * force * 15;
+    posY += Math.sin(angle) * force * 15;
+
+    // boundaries
+    posX = Math.max(0, Math.min(window.innerWidth - rect.width, posX));
+    posY = Math.max(0, Math.min(window.innerHeight - rect.height, posY));
+
+    noBtn.style.transition = "all 0.15s ease-out";
+    noBtn.style.left = posX + "px";
+    noBtn.style.top = posY + "px";
+  }
+});
+
+// Change text only when actually hovered
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.innerText = phrases[phraseIndex];
+  phraseIndex = (phraseIndex + 1) % phrases.length;
+
+  yesScale += 0.05;
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+});
+
+function celebrate(){
+  document.body.innerHTML = `
+  <div style="height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:radial-gradient(circle,#ffe5ec,#ffc2d1);position:relative;overflow:hidden;">
+    <h1 style="font-family:'Great Vibes',cursive;font-size:4rem;color:#d90429;">She Said YES ❤️</h1>
+    <p style="font-size:1.4rem;margin-top:20px;">Best decision ever made 😭</p>
+    <div style="font-size:80px;margin-top:30px;">💐🌹🌸🍫🍫💝💕</div>
+    <a href="photos.html" style="margin-top:30px;padding:12px 30px;background:#d90429;color:white;border-radius:30px;text-decoration:none;">See Our Memories 📸</a>
+  </div>
+  `;
+  effects();
+}
+
+// Premium effects
+function effects(){
+  setInterval(()=>{
+    const el = document.createElement("div");
+    el.className="floating";
+    const items=["❤️","🌸","🍫","💖","🌹"];
+    el.innerText = items[Math.floor(Math.random()*items.length)];
+    el.style.left = Math.random()*100+"vw";
+    el.style.bottom = "-20px";
+    el.style.fontSize = (20 + Math.random()*40)+"px";
+    el.style.animationDuration = (3 + Math.random()*3)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),6000);
+  },200);
+}
+</script>
+
+</body>
+</html>
